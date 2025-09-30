@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Healthcare Appointment Booking</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      height: 100vh;
+      color: #1f2937;
+      background: #f8fafc;
+    }
+
+    /* Left panel */
+    .left-panel {
+      flex: 1;
+      background: linear-gradient(135deg, #2563eb, #1e3a8a);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem;
+    }
+
+    .left-panel h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .left-panel p {
+      font-size: 1.1rem;
+      max-width: 400px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    /* Right panel (form) */
+    .right-panel {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      padding: 2rem;
+      width: 380px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      color: #1e3a8a;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.7rem;
+      margin-top: 0.3rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      margin-top: 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background: #1e40af;
+      transform: scale(1.02);
+    }
+
+    #response {
+      margin-top: 1rem;
+      font-weight: 600;
+      text-align: center;
+      min-height: 1.5rem;
+    }
+
+    .success { color: #16a34a; }
+    .error { color: #dc2626; }
+  </style>
+</head>
+<body>
+  <!-- Left side info panel -->
+  <div class="left-panel">
+    <h1>Healthcare Appointments</h1>
+    <p>
+      Book and manage your healthcare appointments in seconds. 
+      Simple, secure, and reliable. Just pick your doctor, time, and confirm.
+    </p>
+  </div>
+
+  <!-- Right side form -->
+  <div class="right-panel">
+    <div class="container">
+      <h2>Book Appointment</h2>
+      <form id="appointmentForm">
+        <label for="doctor">Doctor</label>
+        <select id="doctor" required>
+          <option value="">Select a doctor</option>
+          <option value="doc-123">Dr. Smith</option>
+          <option value="doc-456">Dr. Jones</option>
+        </select>
+
+        <label for="time">Start Time</label>
+        <input type="datetime-local" id="time" required />
+
+        <label for="patient">Patient ID</label>
+        <input type="text" id="patient" placeholder="Enter your patient ID" required />
+
+        <button type="submit">Book Appointment</button>
+      </form>
+      <div id="response"></div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("appointmentForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const doctor_id = document.getElementById("doctor").value;
+      const start_time = document.getElementById("time").value;
+      const patient_id = document.getElementById("patient").value;
+
+      const responseDiv = document.getElementById("response");
+
+      try {
+        const res = await fetch("http://44.205.3.224:3000/appointments", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({ doctor_id, start_time, patient_id })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          responseDiv.className = "success";
+          responseDiv.innerText = "Appointment booked successfully!";
+        } else {
+          responseDiv.className = "error";
+          responseDiv.innerText = " Failed " + (data.error || "Failed to book");
+        }
+      } catch (err) {
+        responseDiv.className = "error";
+        responseDiv.innerText = "Network error";
+      }
+    });
+  </script>
+</body>
+</html>
