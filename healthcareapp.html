@@ -11,7 +11,7 @@
       display: flex;
       height: 100vh;
       color: #1f2937;
-      background: #f9fafb;
+      background: #f8fafc;
     }
 
     .left-panel {
@@ -25,13 +25,13 @@
     }
 
     .left-panel h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       margin-bottom: 1rem;
     }
 
     .left-panel p {
       font-size: 1.1rem;
-      max-width: 420px;
+      max-width: 400px;
       line-height: 1.6;
       opacity: 0.9;
     }
@@ -45,17 +45,11 @@
     }
 
     .container {
-      background: white;
+      background: rgba(255, 255, 255, 0.95);
       border-radius: 12px;
       padding: 2rem;
-      width: 400px;
+      width: 380px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      animation: fadeIn 0.8s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     h2 {
@@ -119,17 +113,14 @@
 </head>
 <body>
 
-  <!-- Left Info Panel -->
   <div class="left-panel">
     <h1>Healthcare Appointments</h1>
     <p>
-      Book and manage your healthcare appointments with ease.  
-      Secure, reliable, and designed to put you first.  
-      Choose your doctor, pick a time, and confirm instantly.
+      Book and manage your healthcare appointments in seconds. 
+      Simple, secure, and reliable. Just pick your doctor, time, and confirm.
     </p>
   </div>
 
-  <!-- Right Form Panel -->
   <div class="right-panel">
     <div class="container">
       <h2>Book Appointment</h2>
@@ -164,7 +155,6 @@
       const responseDiv = document.getElementById("response");
 
       try {
-        
         const res = await fetch("http://44.205.3.224/appointments", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
@@ -177,11 +167,11 @@
           responseDiv.innerText = "Appointment booked successfully!";
         } else {
           responseDiv.className = "error";
-          responseDiv.innerText = "Failed: " + (data.error || "Could not book appointment");
+          responseDiv.innerText = "Failed: " + (data.error || "Unable to book appointment");
         }
       } catch (err) {
         responseDiv.className = "error";
-        responseDiv.innerText = "Network error. Please try again.";
+        responseDiv.innerText = "Network error — could not reach server.";
       }
     });
   </script>
