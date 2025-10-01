@@ -5,8 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Healthcare Appointment Booking</title>
   <style>
-    body {
+    /* === Global Reset === */
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       height: 100vh;
@@ -14,6 +20,7 @@
       background: #f8fafc;
     }
 
+    /* === Left Panel (branding) === */
     .left-panel {
       flex: 1;
       background: linear-gradient(135deg, #2563eb, #1e3a8a);
@@ -25,7 +32,7 @@
     }
 
     .left-panel h1 {
-      font-size: 2.2rem;
+      font-size: 2.4rem;
       margin-bottom: 1rem;
     }
 
@@ -36,6 +43,7 @@
       opacity: 0.9;
     }
 
+    /* === Right Panel (form) === */
     .right-panel {
       flex: 1;
       display: flex;
@@ -50,6 +58,7 @@
       padding: 2rem;
       width: 380px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      animation: fadeIn 0.5s ease-in-out;
     }
 
     h2 {
@@ -100,6 +109,7 @@
       transform: scale(1.02);
     }
 
+    /* === Feedback Messages === */
     #response {
       margin-top: 1rem;
       font-weight: 600;
@@ -109,18 +119,26 @@
 
     .success { color: #16a34a; }
     .error { color: #dc2626; }
+
+    /* === Animations === */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Branding Side -->
   <div class="left-panel">
     <h1>Healthcare Appointments</h1>
     <p>
       Book and manage your healthcare appointments in seconds. 
-      Simple, secure, and reliable. Just pick your doctor, time, and confirm.
+      Simple, secure, and reliable. Just pick your doctor, choose a time, and confirm.
     </p>
   </div>
 
+  <!-- Form Side -->
   <div class="right-panel">
     <div class="container">
       <h2>Book Appointment</h2>
@@ -153,9 +171,10 @@
       const patient_id = document.getElementById("patient").value;
 
       const responseDiv = document.getElementById("response");
+      responseDiv.className = "";
+      responseDiv.innerText = "Booking appointment...";
 
       try {
-     
         const res = await fetch("https://api.cloudbookingproject.com/appointments", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
