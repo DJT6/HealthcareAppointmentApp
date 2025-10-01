@@ -1,16 +1,16 @@
-name: Deploy frontend to S3 + CloudFront
+name: Deploy Frontend to S3 + CloudFront
 
 on:
   push:
     branches:
-      - main  
+      - main   
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Configure AWS credentials
@@ -21,11 +21,10 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Sync files to S3
-        run: |
-          aws s3 sync . s3://deionhealthcareapp --delete
+        run: aws s3 sync ./ s3://${{ secrets.AWS_S3_BUCKET }} --delete
 
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.DISTRIBUTION_ID }} \
+            --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"
