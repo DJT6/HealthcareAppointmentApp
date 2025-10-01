@@ -155,8 +155,8 @@
       const responseDiv = document.getElementById("response");
 
       try {
-        // ✅ Updated endpoint (no :3000, uses Nginx proxy)
-        const res = await fetch("http://44.205.3.224/appointments", {
+     
+        const res = await fetch("https://api.cloudbookingproject.com/appointments", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({ doctor_id, start_time, patient_id })
