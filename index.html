@@ -155,6 +155,7 @@
       const responseDiv = document.getElementById("response");
 
       try {
+        // ✅ Updated endpoint (no :3000, uses Nginx proxy)
         const res = await fetch("http://44.205.3.224/appointments", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
