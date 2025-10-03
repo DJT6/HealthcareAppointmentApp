@@ -66,6 +66,7 @@
       background: #2563eb;
       color: white;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
     button:hover { background: #1e40af; }
 
@@ -74,12 +75,16 @@
     .error { color: #dc2626; }
 
     .footer {
-      padding: 12px 16px;
+      padding: 14px 20px;
       text-align: center;
-      background: #f1f5f9;
-      border-top: 1px solid #e5e7eb;
-      color: #64748b;
+      background: linear-gradient(to right, #1e3a8a, #2563eb);
+      color: #f8fafc;
       font-size: 0.95rem;
+      border-top: 4px solid #93c5fd;
+      letter-spacing: 0.5px;
+    }
+    .footer strong {
+      color: #facc15;
     }
   </style>
 </head>
@@ -119,7 +124,7 @@
     </main>
 
     <footer class="footer">
-      © <span id="year"></span> Deion. Deployed on S3 & CloudFront.
+      © <span id="year"></span> <strong>Deion</strong> | Deployed with <strong>AWS S3</strong> & <strong>CloudFront</strong>
     </footer>
   </div>
 
@@ -136,7 +141,7 @@
       responseDiv.innerText = "Booking appointment...";
 
       try {
-        const res = await fetch("http://app.cloudbookingproject.com:3100/appointments", {
+        const res = await fetch("https://api.cloudbookingproject.com:3100/appointments", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({ doctor, startTime, patientId })
