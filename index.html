@@ -136,7 +136,7 @@
       responseDiv.innerText = "Booking appointment...";
 
       try {
-        const res = await fetch("http://100.28.60.143:3100/appointments", {
+        const res = await fetch("http://app.cloudbookingproject.com:3100/appointments", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({ doctor, startTime, patientId })
