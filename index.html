@@ -124,7 +124,7 @@
 <body>
   <div class="page">
     <main>
-      <!-- LEFT  -->
+      <!-- LEFT -->
       <div class="left-panel">
         <h1>Healthcare Appointments</h1>
         <p>Book and manage your healthcare appointments securely in just a few clicks. Choose your doctor, set a time, and confirm instantly.</p>
@@ -174,7 +174,7 @@
       responseDiv.innerText = "Booking appointment...";
 
       try {
-        const res = await fetch("http://api.cloudbookingproject.com:3100/appointments", {
+        const res = await fetch("https://api.cloudbookingproject.com/appointments", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ doctor, startTime, patientId })
@@ -183,10 +183,10 @@
         const data = await res.json();
         if (res.ok) {
           responseDiv.className = "success";
-          responseDiv.innerText = "Appointment booked successfully!";
+          responseDiv.innerText = data.message || "Appointment booked successfully!";
         } else {
           responseDiv.className = "error";
-          responseDiv.innerText = "Failed: " + (data.error || "Unable to book appointment.");
+          responseDiv.innerText = data.error || "Failed to book appointment.";
         }
       } catch (err) {
         responseDiv.className = "error";
