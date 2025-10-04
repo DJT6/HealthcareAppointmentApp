@@ -6,17 +6,12 @@
   <title>Healthcare Appointment Booking</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; }
+    html, body { height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f9fafb; color: #1f2937; }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #1f2937;
-      background: #f8fafc;
-    }
+    .page { display: flex; flex-direction: column; min-height: 100vh; }
+    main { flex: 1; display: flex; flex-wrap: wrap; }
 
-    .page { min-height: 100vh; display: flex; flex-direction: column; }
-    .main { flex: 1; display: flex; }
-
+    /* LEFT PANEL */
     .left-panel {
       flex: 1;
       background: linear-gradient(135deg, #2563eb, #1e3a8a);
@@ -24,28 +19,51 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: flex-start;
       padding: 3rem;
+      min-width: 300px;
     }
-    .left-panel h1 { font-size: 2.4rem; margin-bottom: 1rem; }
-    .left-panel p { font-size: 1.1rem; max-width: 420px; line-height: 1.6; opacity: 0.9; }
+    .left-panel h1 {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+      letter-spacing: 0.5px;
+    }
+    .left-panel p {
+      font-size: 1.1rem;
+      max-width: 420px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
 
+    /* RIGHT PANEL */
     .right-panel {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 2rem;
+      min-width: 320px;
     }
     .container {
-      background: white;
+      background: #ffffff;
       border-radius: 12px;
       padding: 2rem;
       width: 380px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.4s ease-in;
     }
 
-    h2 { margin-bottom: 1.5rem; font-weight: 600; color: #1e3a8a; text-align: center; }
-    label { display: block; margin-top: 1rem; font-weight: 500; }
+    h2 {
+      text-align: center;
+      color: #1e3a8a;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
     input, select {
       width: 100%;
       padding: 0.7rem;
@@ -54,6 +72,11 @@
       border-radius: 8px;
       font-size: 1rem;
       background: #fff;
+      transition: border 0.2s;
+    }
+    input:focus, select:focus {
+      border-color: #2563eb;
+      outline: none;
     }
     button {
       width: 100%;
@@ -66,39 +89,49 @@
       background: #2563eb;
       color: white;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.25s ease;
     }
     button:hover { background: #1e40af; }
 
-    #response { margin-top: 1rem; font-weight: 600; text-align: center; }
+    #response {
+      margin-top: 1rem;
+      font-weight: 600;
+      text-align: center;
+      transition: all 0.3s;
+    }
     .success { color: #16a34a; }
     .error { color: #dc2626; }
 
+    /* FOOTER */
     .footer {
       padding: 14px 20px;
       text-align: center;
       background: linear-gradient(to right, #1e3a8a, #2563eb);
       color: #f8fafc;
       font-size: 0.95rem;
-      border-top: 4px solid #93c5fd;
-      letter-spacing: 0.5px;
+      border-top: 3px solid #93c5fd;
+      letter-spacing: 0.4px;
     }
     .footer strong {
       color: #facc15;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <main class="main">
+    <main>
+      <!-- LEFT SIDE -->
       <div class="left-panel">
         <h1>Healthcare Appointments</h1>
-        <p>
-          Book and manage your healthcare appointments in seconds.
-          Just pick your doctor, choose a time, and confirm.
-        </p>
+        <p>Book and manage your healthcare appointments securely in just a few clicks. Choose your doctor, set a time, and confirm instantly.</p>
       </div>
 
+      <!-- RIGHT SIDE -->
       <div class="right-panel">
         <div class="container">
           <h2>Book Appointment</h2>
@@ -123,8 +156,9 @@
       </div>
     </main>
 
+    <!-- FOOTER -->
     <footer class="footer">
-      © <span id="year"></span> <strong>Deion</strong> | Deployed with <strong>AWS S3</strong> & <strong>CloudFront</strong>
+      © <span id="year"></span> <strong>Deion</strong> — Powered by <strong>AWS S3</strong>, <strong>CloudFront</strong>, and <strong>EC2</strong>
     </footer>
   </div>
 
@@ -135,15 +169,15 @@
       const doctor = document.getElementById("doctor").value;
       const startTime = document.getElementById("time").value;
       const patientId = document.getElementById("patient").value;
-
       const responseDiv = document.getElementById("response");
+
       responseDiv.className = "";
       responseDiv.innerText = "Booking appointment...";
 
       try {
-        const res = await fetch("https://api.cloudbookingproject.com:3100/appointments", {
+        const res = await fetch("http://api.cloudbookingproject.com:3100/appointments", {
           method: "POST",
-          headers: {"Content-Type": "application/json"},
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ doctor, startTime, patientId })
         });
 
@@ -153,7 +187,7 @@
           responseDiv.innerText = "Appointment booked successfully!";
         } else {
           responseDiv.className = "error";
-          responseDiv.innerText = "Failed: " + (data.error || "Unable to book appointment");
+          responseDiv.innerText = "Failed: " + (data.error || "Unable to book appointment.");
         }
       } catch (err) {
         responseDiv.className = "error";
