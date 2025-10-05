@@ -2,11 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Healthcare Appointment Booking</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f9fafb; color: #1f2937; }
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9fafb;
+      color: #1f2937;
+    }
 
     .page { display: flex; flex-direction: column; min-height: 100vh; }
     main { flex: 1; display: flex; flex-wrap: wrap; }
@@ -138,8 +143,8 @@
             <label for="doctor">Doctor</label>
             <select id="doctor" required>
               <option value="">Select a doctor</option>
-              <option value="doc-123">Dr. Smith</option>
-              <option value="doc-456">Dr. Jones</option>
+              <option value="Dr. Smith">Dr. Smith</option>
+              <option value="Dr. Jones">Dr. Jones</option>
             </select>
 
             <label for="time">Start Time</label>
@@ -181,7 +186,8 @@
         });
 
         const data = await res.json();
-        if (res.ok) {
+
+        if (res.ok && data.ok) {
           responseDiv.className = "success";
           responseDiv.innerText = data.message || "Appointment booked successfully!";
         } else {
