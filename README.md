@@ -28,5 +28,5 @@ Client → Route 53 → CloudFront → Nginx (EC2) → Node.js API → DynamoDB
 
 ## Auther
 Deion Jose Tulcidas
-AWS Cloud Certified | Business Information Systems Major @ University of Pittsburgh 
-Building scalable, cloud-native applications on AWS 
+- AWS Cloud Certified | Business Information Systems Major @ University of Pittsburgh 
+  Building scalable, cloud-native applications on AWS 
