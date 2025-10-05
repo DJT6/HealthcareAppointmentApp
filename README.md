@@ -1,4 +1,3 @@
-servers down at the moment 
 ## Healthcare Appointment Booking System
 
 This project is a cloud-hosted web application that allows patients to schedule, cancel, and manage healthcare appointments online. It was built using AWS services including EC2 for the backend API, DynamoDB for storing appointment data, Route 53 for domain management, and Nginx for serving the frontend and acting as a reverse proxy.
