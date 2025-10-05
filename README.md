@@ -1,33 +1,30 @@
-## Healthcare Appointment Booking System
+# Cloud-Based Appointment Management System
 
-This project is a cloud-hosted web application that allows patients to schedule, cancel, and manage healthcare appointments online. It was built using AWS services including EC2 for the backend API, DynamoDB for storing appointment data, Route 53 for domain management, and Nginx for serving the frontend and acting as a reverse proxy.
+A **full-stack healthcare-style appointment booking system** deployed on AWS, demonstrating modern **multi-tier cloud architecture** and **CI/CD automation**.  
+Patients can securely book, manage, and cancel appointments via a responsive frontend, while backend operations run on AWS with high availability and scalability.
 
-The goal was to create a cloud-based application that demonstrates how a real-world booking system can be deployed securely and reliably using AWS infrastructure.
+---
 
-## Features
+## Overview
 
-Frontend website served through Nginx
+This project simulates a real-world healthcare scheduling system deployed entirely on AWS.  
+It uses a **multi-tier architecture** integrating EC2, DynamoDB, Route 53, and Nginx for secure and scalable access.  
+It also features **CI/CD pipelines** through GitHub Actions for automated deployments, and **CloudWatch monitoring** for observability.
 
-Node.js + Express backend API running on EC2
+---
 
-DynamoDB table for storing patient and appointment information
+## Architecture
 
-Route 53 for domain management with subdomains (app.cloudbookingproject.com and api.cloudbookingproject.com)
+**Architecture Components:**
+- **Frontend:** Hosted via AWS S3 + CloudFront with custom domain (HTTPS via Route 53)
+- **Backend:** Node.js/Express API running on EC2 with Nginx reverse proxy
+- **Database:** DynamoDB for storing appointment data
+- **Monitoring:** CloudWatch logs and alarms for backend/API health
+- **Security:** IAM roles with least-privilege access, SSL via Route 53 + Nginx
+- **Automation:** CI/CD pipeline integrated with GitHub Actions for continuous deployment
 
-HTTPS enabled with Let’s Encrypt SSL certificates
+### System Diagram
+Client → Route 53 → CloudFront → Nginx (EC2) → Node.js API → DynamoDB
 
-## Challenges
-
-While working on this project, I ran into several issues with Nginx configuration, SSL setup, and connecting the frontend to the backend API through custom domains. These were resolved by carefully configuring Nginx server blocks, setting up DNS records in Route 53, and testing the API endpoints with cURL before integrating the frontend.
-
-## How it works
-
-The frontend is a simple HTML/CSS/JS site with a booking form.
-
-Patients choose a doctor, select a time, and submit their appointment.
-
-The request is sent to the backend API (api.cloudbookingproject.com).
-
-The Node.js server validates the request and stores it in DynamoDB.
-
-A confirmation message is sent back to the frontend to notify the patient.
+## Auther
+Deion Jose Tulcidas
